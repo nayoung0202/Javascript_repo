@@ -1,4 +1,4 @@
-package com.kitri.springbasicboot.hello;
+package com.kitri.springbasicboot.lesson.hello;
 
 import org.springframework.stereotype.Component;
 

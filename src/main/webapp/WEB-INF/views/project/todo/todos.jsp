@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="todolist.css" />
+    <link rel="stylesheet" href="/todolist/todolist.css" />
     <title>Todo List</title>
 </head>
 <body>
@@ -16,6 +16,6 @@
 </form>
 <small>왼쪽 클릭: 항목 완료 <br> 오른쪽 클릭: 해당 항목 삭제</small>
 
-<script src="todolist/todolist.js"></script>
+<script src="/todolist/todolist.js"></script>
 </body>
 </html>

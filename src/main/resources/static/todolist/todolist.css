@@ -22,6 +22,11 @@ h1 {
     text-align: center;
 }
 
+.todos li.completed{
+    color: #b6b6b6;
+    text-decoration: line-through;
+}
+
 form {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     max-width: 100%;

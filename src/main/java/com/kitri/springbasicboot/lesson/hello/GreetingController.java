@@ -1,7 +1,6 @@
-package com.kitri.springbasicboot.hello;
+package com.kitri.springbasicboot.lesson.hello;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
