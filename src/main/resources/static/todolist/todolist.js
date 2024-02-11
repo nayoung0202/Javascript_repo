@@ -15,8 +15,8 @@ async function todos() {
 
     //게시물 생성
     for (let i in todo_api) {
-        let check = todo_api[idx].chk;
-        let todos = `<li class="${check == "true" ? "completed" : ""}">${todo_api[idx].todo}
+        let check = todo_api[idx].done;
+        let todos = `<li class="${check == true ? "completed" : ""}">${todo_api[idx].content}
                             <input type="hidden" value="${todo_api[idx].id}"></li>
             `;
         container.innerHTML += todos;
@@ -26,6 +26,7 @@ async function todos() {
 }
 todos();
 
+//등록
 form.addEventListener("submit" , e => {
     e.preventDefault()
     let gettodo = document.getElementById("input")
@@ -33,7 +34,7 @@ form.addEventListener("submit" , e => {
     let addvalue = gettodo.value
     // console.log(addvalue)
     //gettodo의 값을 addvalue에 담는다.
-    gettodo.value = "";
+    gettodo.value = ""; //초기화
     add(addvalue);
     // console.log(addvalue)
 
@@ -43,15 +44,15 @@ form.addEventListener("submit" , e => {
 
 
 async function add(addvalue){
-    let response = await fetch("api/todos/addTodo",
+    let response = await fetch("api/todos/save",
     {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            todo: addvalue,
-            chk: "false",
+            content: addvalue,
+            done: false, //false
         })
     }).then((res)=> {todos()});
 
@@ -88,7 +89,7 @@ document.querySelector('ul').addEventListener('click', (event) => {
 });
 //취소선 취소 함수
 async function chkcancle(chkid){
-    await fetch("/api/todos/updateTodo",
+    await fetch("/api/todos/update",
         {
             method: "POST",
             headers: {
@@ -96,13 +97,13 @@ async function chkcancle(chkid){
             },
             body: JSON.stringify({
                 id : chkid,
-                chk: "false",
+                done: false, //false
             })
         })
 }
 //취소선 생성 함수
 async function chkchange(chkid){
-    let response= await fetch("/api/todos/updateTodo",
+    let response= await fetch("/api/todos/update",
         {
             method: "POST",
             headers: {
@@ -110,7 +111,7 @@ async function chkchange(chkid){
             },
             body: JSON.stringify({
                 id : chkid,
-                chk: "true",
+                done: true, //true
             })
         })
 }
@@ -119,19 +120,16 @@ document.querySelector('ul').addEventListener('mousedown', (event) => {
     if ((event.button === 2)||(event.which === 3)) {
         chkid = event.target.childNodes[1].value
         deletetodo(chkid);
-
     }
     window.oncontextmenu = function (){
         //마우스 우클릭시 메뉴창 해제
         return false;
     }
-
-
 });
 
 //리스트 삭제 함수
 async function deletetodo(chkid){
-    let response= await fetch("/api/todos/deleteTodo",
+    let response= await fetch("/api/todos/delete",
         {
             method: "POST",
             headers: {

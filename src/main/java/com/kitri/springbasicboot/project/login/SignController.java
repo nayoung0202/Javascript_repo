@@ -1,15 +1,21 @@
 package com.kitri.springbasicboot.project.login;
 import com.kitri.springbasicboot.lesson.mapping.Student;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 @Controller
 @RequestMapping("/sign")
@@ -56,8 +62,10 @@ public class SignController {
         return "redirect:/login/signsuccess.html";
     }
 
+
     @PostMapping("/login")
-    public String loginFrom(@Valid SignFormDto form){
+    public String loginFrom(@Valid SignFormDto form, HttpServletRequest request){
+
 
         //로그인 확인
         for(Map.Entry<Integer, SignFormDto> entry : signform.entrySet()) {
@@ -65,14 +73,24 @@ public class SignController {
             String passwordcheck = entry.getValue().password;
             if (emailcheck.equals(form.email) && passwordcheck.equals(form.password)) {
                 //패스워드 확인
+                //session 생성
+                HttpSession session = request.getSession();
+                session.setAttribute("sessionId", form.email);
                 return "redirect:/login/loginsuccess.html";
             }
-        }
 
+            }
         return "redirect:/login/loginfail.html";
     }
+    @GetMapping("/logout")
+    public String deleteSession(HttpServletRequest request, HttpServletResponse response){
+        HttpSession session = request.getSession();
 
-    //session 생성
+        session.invalidate();
+
+        return "redirect:/login/login.html";
+
+    }
 
 
 }
