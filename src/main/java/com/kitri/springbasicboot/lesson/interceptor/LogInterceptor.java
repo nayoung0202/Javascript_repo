@@ -19,6 +19,5 @@ public class LogInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         log.info("로그 메시지 : postHandle() 호출됨");
     }
-
     //등록 -> WebConfig에서 호출
 }

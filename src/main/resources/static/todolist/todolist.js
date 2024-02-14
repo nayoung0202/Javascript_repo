@@ -72,7 +72,7 @@ document.querySelector('ul').addEventListener('click', (event) => {
     if (event.target.className == ""){
         //취소선 생성
         event.target.className += "completed";
-        chkid = event.target.childNodes[1].value
+        chkid = event.target.childNodes[1].value //li 태그의 id (value)
 
         chkchange(chkid);
     }else {
